@@ -4,23 +4,29 @@ import { KeyboardAvoidingView,Modal,Platform ,TextInput,View,Text, Pressable} fr
 import SelectColorTab from "./SelectColorTab"
 import DateSelect from "./DateSelect"
 
-const NewTodo = ({isOpen,onClose}:newTodoProps) => {
+const NewTodo = ({isOpen,onClose,selectedTab,todo,setTodo}:newTodoProps) => {
 
-  const [todo,setTodo]=useState("")
-
+  const [title,setTitle]=useState("")
   //colortab
   const [selectedColor,setSelectedColor]=useState(tabsSelectColors[0])
 
   //creating a new Todo
   const handleSubmit=()=>{
-    if(!todo)return 
+    if(!title.trim())return 
 
     const newTodo:AllTodos={
       id:Date.now().toString(),
-      todo:todo,
-      date:Date.now().toString()
+      todo:title,
+      date:Date.now(),
+      tag:selectedTab,
+      completed:false,
+      colors:selectedColor.bgColor
     }
 
+    setTodo((prev:AllTodos[])=>[...prev,newTodo])
+
+    setTitle("")
+    onClose()
   }
 
   return (
@@ -29,6 +35,7 @@ const NewTodo = ({isOpen,onClose}:newTodoProps) => {
     transparent
     animationType="slide"
     onRequestClose={onClose}>
+
       <KeyboardAvoidingView
       behavior={Platform.OS==="ios"?"padding":"height"} 
       className="flex-1">
@@ -48,8 +55,8 @@ const NewTodo = ({isOpen,onClose}:newTodoProps) => {
            <View className="flex-col ">
              <TextInput
               placeholder="Enter Todo"
-              value={todo}
-              onChangeText={setTodo}
+              value={title}
+              onChangeText={setTitle}
               placeholderTextColor={selectedColor.textColor}
               autoFocus
               textAlignVertical="top"

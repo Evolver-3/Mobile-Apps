@@ -3,14 +3,22 @@ import {LinearGradient} from 'expo-linear-gradient'
 import {useColorScheme} from 'nativewind'
 import { Alltabs } from '@/constants/data'
 
+type AllTypesProps={
+  selectedTab:string 
+  setSelectTab:(tab:string)=>void
+}
 
-const AllTypes = () => {
-
+const AllTypes = ({selectedTab,setSelectTab}:AllTypesProps) => {
+ 
   const {colorScheme}=useColorScheme()
 
   const bg=colorScheme==="dark"?"#09090b":"#ffffff"
 
   const transparent =colorScheme==="dark"?"rgba(9,9,11,0)":"rgba(255,255,255,0)"
+
+  const TabsCols=colorScheme === "dark"?"#6B6665":"#D1C7C2"
+
+  const TabsNotCols=colorScheme==="dark"?"#332F2E":"#F2EFED"
 
 
   return (
@@ -23,8 +31,13 @@ const AllTypes = () => {
       renderItem={({item})=>(
 
       <Pressable
-       className='px-4 py-2 rounded-xl bg-neutral-200 active:bg-neutral-300 m-2 dark:bg-neutral-700 dark:active:bg-neutral-800'>
-          <Text className='text-md text-neutral-800 dark:text-neutral-100'>{item}</Text>
+      onPress={()=>setSelectTab(item)}
+       className='px-4 py-2 rounded-xl bg-neutral-200 active:bg-neutral-300 m-2 dark:bg-neutral-700 dark:active:bg-neutral-800'
+       style={{
+        backgroundColor:selectedTab ===item? TabsCols:TabsNotCols
+       }}>
+          <Text className='text-md text-neutral-800 dark:text-neutral-100'
+          >{item}</Text>
       </Pressable>
         )}/>
 
