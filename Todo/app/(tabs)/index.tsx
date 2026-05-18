@@ -6,15 +6,20 @@ import ThemeToggle from '@/components/ThemeToggle'
 import {useColorScheme} from 'nativewind'
 import AllTypes from '@/components/AllTypes'
 import NewTodo from '@/components/NewTodo'
+import CreatedTodo from '@/components/CreatedTodo'
 
 const index = () => {
 
   const [openSideTab,setOpenSideTab]=useState(false)
 
-  const [isOpen,setIsOpen]=useState(false)
+  const [isOpen,setIsOpen]= useState(false)
 
   const {colorScheme}=useColorScheme()
   const isDark=colorScheme==="dark"
+
+  const [selectedTab,setSelectedTab]=useState("")
+
+  const [todo,setTodo]=useState<AllTodos[]>([])
 
   return (
     <SafeAreaView className='flex-1 bg-white dark:bg-neutral-950 p-2'>
@@ -44,7 +49,11 @@ const index = () => {
           )}
 
         </View>
-        <AllTypes/>
+        <AllTypes setSelectTab={setSelectedTab} selectedTab={selectedTab}/>
+        </View>
+
+        <View  className='flex-1'>
+          <CreatedTodo todo={todo} selectedTab={selectedTab}/>
         </View>
       
         <View className='mb-8'>
@@ -59,11 +68,10 @@ const index = () => {
 
       </View>
 
-      
-
       <NewTodo
       isOpen={isOpen}
-      onClose={()=>setIsOpen(false)}/>
+      onClose={()=>setIsOpen(false)}
+      selectedTab={selectedTab} todo={todo} setTodo={setTodo}/>
     </SafeAreaView>
   )
 }
