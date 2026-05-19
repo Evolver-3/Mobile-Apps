@@ -76,5 +76,62 @@ export const getTodoByTag=asyncHandler(async(req,res)=>{
 })
 
 export const updateTodo=asyncHandler(async(req,res)=>{
-  
+  const {id}=req.params
+  const {title,colors}=req.body
+
+  if(!id){
+    throw new ApiError(400,"Id is required")
+  }
+
+  if(!title?.trim()){
+    throw new ApiError(400,"Title is required")
+  }
+
+  if(!colors?.trim()){
+    throw new ApiError(400,"Colors is required")
+  }
+
+  const updatedTodo=await prisma.todo.update({
+    where:{
+      id,
+    },
+    data:{
+      title,
+      colors
+    }
+  })
+
+  return res.status(200).json(
+    new ApiResponse(200,updatedTodo,"Todo updated")
+  )
+
+})
+
+export const updateTodoStatus=asyncHandler(async(req,res)=>{
+  const {id}=req.params
+
+  const todo=await prisma.todo.findUnique({
+    where:{
+      id
+    }
+  })
+
+  if(!todo){
+    throw new ApiError(404,"Todo not found")
+  }
+
+  const updatedTodo=await prisma.todo.update({
+    where:{
+      id
+    },
+    data:{
+      completed:!todo.completed
+    }
+  })
+
+  if(!updatedTodo){
+    throw new ApiError(404,"Error exist when changing todo status")
+  } 
+
+  return res.status(200).json(new ApiResponse(200,updatedTodo,"Todo status changed"))
 })
