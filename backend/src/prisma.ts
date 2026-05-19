@@ -1,3 +1,14 @@
-import { PrismaClient } from "@prisma/client/extension";
+const { PrismaClient } = require("@prisma/client")
 
-export const prisma=new PrismaClient()
+const prisma = new PrismaClient()
+
+const connectDB = async () => {
+  try {
+    await prisma.$connect()
+    console.log("Database connected successfully !!")
+  } catch (error) {
+    console.log("Database connection failed:", error)
+  }
+}
+
+export { prisma, connectDB }

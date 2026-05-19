@@ -13,6 +13,6 @@ app.use(express.json({
 
 import router from "./routes/todo.routes"
 
-app.use("api/v1/todo",router)
+app.use("/api/v1/todo",router)
 
 export {app}
