@@ -7,6 +7,7 @@ import {useColorScheme} from 'nativewind'
 import AllTypes from '@/components/AllTypes'
 import NewTodo from '@/components/NewTodo'
 import CreatedTodo from '@/components/CreatedTodo'
+import { useTodos } from '@/hooks/useTodos'
 
 const index = () => {
 
@@ -19,7 +20,10 @@ const index = () => {
 
   const [selectedTab,setSelectedTab]=useState("")
 
-  const [todo,setTodo]=useState<AllTodos[]>([])
+ 
+
+  const {todos,setTodos} =useTodos(selectedTab)
+
 
   return (
     <SafeAreaView className='flex-1 bg-white dark:bg-neutral-950 p-2'>
@@ -53,7 +57,7 @@ const index = () => {
         </View>
 
         <View  className='flex-1'>
-          <CreatedTodo todo={todo} selectedTab={selectedTab}/>
+          <CreatedTodo todo={todos} selectedTab={selectedTab}/>
         </View>
       
         <View className='mb-8'>
@@ -71,7 +75,7 @@ const index = () => {
       <NewTodo
       isOpen={isOpen}
       onClose={()=>setIsOpen(false)}
-      selectedTab={selectedTab} todo={todo} setTodo={setTodo}/>
+      selectedTab={selectedTab} todo={todos} setTodo={setTodos}/>
     </SafeAreaView>
   )
 }
