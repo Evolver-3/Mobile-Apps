@@ -28,11 +28,12 @@ const AllTypes = ({selectedTab,setSelectTab}:AllTypesProps) => {
       data={Alltabs}
       horizontal
       showsHorizontalScrollIndicator={false}
+      initialScrollIndex={0 }
       renderItem={({item})=>(
 
       <Pressable
       onPress={()=>setSelectTab(item)}
-       className='px-4 py-2 rounded-xl bg-neutral-200 active:bg-neutral-300 m-2 dark:bg-neutral-700 dark:active:bg-neutral-800'
+       className='px-4 py-2 rounded-xl m-2 '
        style={{
         backgroundColor:selectedTab ===item? TabsCols:TabsNotCols
        }}>

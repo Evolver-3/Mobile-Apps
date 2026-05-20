@@ -3,30 +3,39 @@ import { useState } from "react"
 import { KeyboardAvoidingView,Modal,Platform ,TextInput,View,Text, Pressable} from "react-native"
 import SelectColorTab from "./SelectColorTab"
 import DateSelect from "./DateSelect"
+import { useTodos } from "@/hooks/useTodos"
 
 const NewTodo = ({isOpen,onClose,selectedTab,todo,setTodo}:newTodoProps) => {
+
+  const {createNewTodos}=useTodos(selectedTab)
 
   const [title,setTitle]=useState("")
   //colortab
   const [selectedColor,setSelectedColor]=useState(tabsSelectColors[0])
 
   //creating a new Todo
-  const handleSubmit=()=>{
+  const handleSubmit=async()=>{
     if(!title.trim())return 
 
-    const newTodo:AllTodos={
-      id:Date.now().toString(),
-      todo:title,
-      date:Date.now(),
-      tag:selectedTab,
-      completed:false,
-      colors:selectedColor.bgColor
+    console.log(title)
+
+    try{
+      const response =await createNewTodos(
+      title,
+      selectedColor.bgColor
+      )
+      console.log(response)
+
+      setTodo((prev:AllTodos[])=>[
+        response.data,
+        ...prev
+      ])
+      setTitle("")
+      onClose()
+
+    }catch(error){
+      console.log(error)
     }
-
-    setTodo((prev:AllTodos[])=>[...prev,newTodo])
-
-    setTitle("")
-    onClose()
   }
 
   return (
