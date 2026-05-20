@@ -17,7 +17,6 @@ export const createNewTodo=asyncHandler(async(req,res)=>{
   return res.status(201).json(new ApiResponse(201,todo,"Todo created"))
 })
 
-
 export const getTodo=asyncHandler(async(req,res)=>{
   const {id}=req.params
 
