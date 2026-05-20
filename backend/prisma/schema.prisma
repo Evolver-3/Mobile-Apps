@@ -11,6 +11,7 @@ model Todo {
   id        String   @id @default(cuid())
   title     String
   tag       String
-  isDone    Boolean  @default(false)
+  colors    String?
+  completed Boolean  @default(false)
   createdAt DateTime @default(now())
 }
