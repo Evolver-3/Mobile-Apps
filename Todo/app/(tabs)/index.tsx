@@ -7,7 +7,7 @@ import {useColorScheme} from 'nativewind'
 import AllTypes from '@/components/AllTypes'
 import NewTodo from '@/components/NewTodo'
 import CreatedTodo from '@/components/CreatedTodo'
-import { useTodos } from '@/hooks/useTodos'
+import { useTodos} from '@/hooks/useTodos'
 
 const index = () => {
 
@@ -20,9 +20,8 @@ const index = () => {
 
   const [selectedTab,setSelectedTab]=useState("")
 
- 
 
-  const {todos,setTodos} =useTodos(selectedTab)
+  const {todos,setTodos,changeStatus} =useTodos(selectedTab)
 
 
   return (
@@ -57,7 +56,7 @@ const index = () => {
         </View>
 
         <View  className='flex-1'>
-          <CreatedTodo todo={todos} selectedTab={selectedTab}/>
+          <CreatedTodo todo={todos} selectedTab={selectedTab} changeStatus={changeStatus}/>
         </View>
       
         <View className='mb-8'>
