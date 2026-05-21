@@ -1,18 +1,19 @@
 import { View, Text ,FlatList, Pressable} from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CheckCircle, CheckCircleIcon,BoxSelectIcon} from 'lucide-react-native'
+
 
 type createdTodoProps={
   todo:AllTodos[],
-  selectedTab:string
+  selectedTab:string,
+  changeStatus:(id:string)=>Promise<AllTodos|undefined>
 }
 
-const CreatedTodo = ({todo,selectedTab}:createdTodoProps) => {
+const CreatedTodo = ({todo,selectedTab,changeStatus}:createdTodoProps) => {
 
-  const filteredData=todo.filter(
+  const filteredData=selectedTab==="All"?todo:todo.filter(
     (item)=>item.tag===selectedTab
   )
-
 
   return (
     <FlatList
@@ -27,7 +28,12 @@ const CreatedTodo = ({todo,selectedTab}:createdTodoProps) => {
  
         <Text>{item.title}</Text>
         </View>
-        <Pressable>
+        <Pressable
+        className='w-10 h-10 items-center justify-center'
+        onPress={()=>{
+          changeStatus(item.id)
+          console.log(item.completed)
+          console.log(item.id)}}>
 
           {item.completed?(
             <CheckCircle size={24}/>):(
