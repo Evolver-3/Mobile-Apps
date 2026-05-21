@@ -5,14 +5,20 @@ declare global{
 
   interface newTodoProps{
     isOpen:boolean;
-    onClose:()=>void
+    onClose:()=>void;
+    selectedTab:string;
+    todo:array
+    setTodo:(array)=>void
   }
 
-  interface AllTodos{
-    id:string;
-    todo:string;
-    date:string;
-  }
+  type TodoTag =string
+  | "In progress"
+  | "Overdue"
+  | "Today"
+  | "Next 7 days"
+  | "High priority"
+
+
 
   interface AllColors{
     color:string;
@@ -20,6 +26,14 @@ declare global{
     textColor:string;
     btnColor:string
   }
+
+  type AllTodos = {
+  id: string;
+  title: string;
+  tag: string;
+  colors: string;
+  completed: boolean;
+};
   
 }
 export {}
