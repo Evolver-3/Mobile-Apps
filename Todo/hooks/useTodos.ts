@@ -1,4 +1,4 @@
-import { createTodo ,getTodoByTag} from "@/services/todoServices";
+import { createTodo ,getTodoByTag,updateTodoStatus} from "@/services/todoServices";
 import { useEffect, useState } from "react";
 
 
@@ -11,6 +11,8 @@ export const useTodos=(selectedTab:string)=>{
     setLoading(true)
 
     const res=await getTodoByTag(selectedTab)
+
+    console.log(res.data)
 
     setTodos(res.data)
   }catch(error){
@@ -30,6 +32,7 @@ export const useTodos=(selectedTab:string)=>{
     }
 
     const res=await createTodo({title,tag:selectedTab,colors})
+    
 
     return res
   }catch(error){
@@ -37,6 +40,28 @@ export const useTodos=(selectedTab:string)=>{
   }finally{
     setLoading(false)
   }
+ }
+
+ const changeStatus=async(id:string)=>{
+  try{
+    setLoading(true)
+
+    const res=await updateTodoStatus(id)
+    const updatedTodo=res.data
+
+    setTodos((prev)=>prev.map((todo)=>todo.id===updatedTodo.id?updatedTodo:todo))
+
+    console.log(updatedTodo)
+     return res.data
+
+  }catch(error){
+    console.log(error)
+    throw error
+  }finally{
+    setLoading(false)
+  }
+
+ 
  }
 
   useEffect(()=>{
@@ -50,6 +75,7 @@ export const useTodos=(selectedTab:string)=>{
     loading,
     setTodos,
     fetchTodos,
-    createNewTodos
+    createNewTodos,
+    changeStatus
   }
 }
