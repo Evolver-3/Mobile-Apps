@@ -21,10 +21,11 @@ export const deleteTodo=async(id:string)=>{
   return res.data
 }
 
-export const updateTodoStatus=async(id:string,
-  completed:boolean
+export const updateTodoStatus=async(id:string
 )=>{
-  const res=await api.patch(`/status/${id}`,{completed})
+  const res=await api.patch(`/status/${id}`)
+
+  console.log(res.data)
 
   return res.data
-}
+} 
