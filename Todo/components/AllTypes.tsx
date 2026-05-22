@@ -5,7 +5,7 @@ import { Alltabs } from '@/constants/data'
 
 type AllTypesProps={
   selectedTab:string 
-  setSelectTab:(tab:string)=>void
+  setSelectTab:(tab:TodoTag)=>void
 }
 
 const AllTypes = ({selectedTab,setSelectTab}:AllTypesProps) => {
