@@ -16,6 +16,11 @@ export const getTodoByTag=async(tag:string)=>{
   return res.data
 }
 
+export const getAllTodo=async()=>{
+  const res=await api.get("/AllTag")
+  return res.data
+}
+
 export const deleteTodo=async(id:string)=>{
   const res=await api.delete(`/delete/${id}`)
   return res.data
