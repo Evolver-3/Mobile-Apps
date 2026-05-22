@@ -1,4 +1,4 @@
-import { createTodo ,getTodoByTag,updateTodoStatus} from "@/services/todoServices";
+import { createTodo ,getTodoByTag,updateTodoStatus,getAllTodo,deleteTodo} from "@/services/todoServices";
 import { useEffect, useState } from "react";
 
 
@@ -15,6 +15,21 @@ export const useTodos=(selectedTab:string)=>{
     console.log(res.data)
 
     setTodos(res.data)
+  }catch(error){
+    console.log(error)
+  }finally{
+    setLoading(false)
+  }
+ }
+
+ const fetchAllTodos=async()=>{
+  try{
+    setLoading(true)
+
+    const res=selectedTab==="All"?await getAllTodo():await getTodoByTag(selectedTab)
+
+    setTodos(res.data)
+
   }catch(error){
     console.log(error)
   }finally{
@@ -64,9 +79,26 @@ export const useTodos=(selectedTab:string)=>{
  
  }
 
+ const deleteSelectedTodo=async(id:string)=>{
+  try{
+    setLoading(true)
+
+    const res=await deleteTodo(id)
+
+    setTodos((prev)=>prev.filter((todo)=>todo.id !==id))
+    return res.data
+
+  }catch(error){
+    console.log(error)
+  }finally{
+    setLoading(false)
+  }
+ }
+
   useEffect(()=>{
     if(selectedTab){
       fetchTodos()
+      fetchAllTodos()
     }
   },[selectedTab])
 
@@ -76,6 +108,8 @@ export const useTodos=(selectedTab:string)=>{
     setTodos,
     fetchTodos,
     createNewTodos,
-    changeStatus
+    changeStatus,
+    fetchAllTodos,
+    deleteSelectedTodo
   }
 }
