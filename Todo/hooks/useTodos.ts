@@ -26,7 +26,8 @@ export const useTodos=(selectedTab:string)=>{
   try{
     setLoading(true)
 
-    const res=selectedTab==="All"?await getAllTodo():await getTodoByTag(selectedTab)
+    const res=selectedTab==="All"?await getAllTodo() :
+    await getTodoByTag(selectedTab)
 
     setTodos(res.data)
 
@@ -96,10 +97,10 @@ export const useTodos=(selectedTab:string)=>{
  }
 
   useEffect(()=>{
-    if(selectedTab){
+    if(selectedTab==="All"){
       fetchAllTodos()
+    }else{
       fetchTodos()
-      
     }
   },[selectedTab])
 
