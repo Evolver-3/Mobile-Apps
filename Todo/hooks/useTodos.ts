@@ -97,8 +97,9 @@ export const useTodos=(selectedTab:string)=>{
 
   useEffect(()=>{
     if(selectedTab){
-      fetchTodos()
       fetchAllTodos()
+      fetchTodos()
+      
     }
   },[selectedTab])
 
