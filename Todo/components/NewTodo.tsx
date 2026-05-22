@@ -66,14 +66,12 @@ const NewTodo = ({isOpen,onClose,selectedTab,todo,setTodo}:newTodoProps) => {
               placeholder="Enter Todo"
               value={title}
               onChangeText={setTitle}
-              placeholderTextColor={selectedColor.textColor}
               autoFocus
               textAlignVertical="top"
               multiline
               numberOfLines={5}
               className="rounded-2xl h-30 py-6 text-lg"
-              style={{
-              color:selectedColor.textColor}}/>
+              />
               
             <View className="flex-row mt-4 items-center justify-between">
 
@@ -84,10 +82,8 @@ const NewTodo = ({isOpen,onClose,selectedTab,todo,setTodo}:newTodoProps) => {
              onSelectColor={setSelectedColor}/>
             </View>
 
-             <Pressable className=" rounded-full items-center justify-center p-3 "
-             style={{
-              backgroundColor:selectedColor.btnColor
-             }}
+             <Pressable className=" rounded-full items-center justify-center p-3 bg-slate-100 dark:bg-neutral-400"
+             
              onPress={handleSubmit}>
               <Text className="text-md font-semibold">Done</Text>
               </Pressable>
