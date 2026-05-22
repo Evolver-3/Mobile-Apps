@@ -8,6 +8,7 @@ import AllTypes from '@/components/AllTypes'
 import NewTodo from '@/components/NewTodo'
 import CreatedTodo from '@/components/CreatedTodo'
 import { useTodos} from '@/hooks/useTodos'
+import {GestureHandlerRootView} from 'react-native-gesture-handler'
 
 const index = () => {
 
@@ -18,14 +19,15 @@ const index = () => {
   const {colorScheme}=useColorScheme()
   const isDark=colorScheme==="dark"
 
-  const [selectedTab,setSelectedTab]=useState("")
+  const [selectedTab,setSelectedTab]=useState<TodoTag>("All")
 
 
-  const {todos,setTodos,changeStatus} =useTodos(selectedTab)
+  const {todos,setTodos,changeStatus,deleteSelectedTodo} =useTodos(selectedTab)
 
 
   return (
-    <SafeAreaView className='flex-1 bg-white dark:bg-neutral-950 p-2'>
+    <GestureHandlerRootView className='flex-1'>
+      <SafeAreaView className='flex-1 bg-white dark:bg-neutral-950 p-2'>
       <View className='flex-1 justify-between '>
         <View className='  gap-y-4'>
         <View className='flex-row justify-between items-center pl-2'>
@@ -56,7 +58,7 @@ const index = () => {
         </View>
 
         <View  className='flex-1'>
-          <CreatedTodo todo={todos} selectedTab={selectedTab} changeStatus={changeStatus}/>
+          <CreatedTodo todo={todos} selectedTab={selectedTab} changeStatus={changeStatus} deleteSelectedTodo={deleteSelectedTodo}/>
         </View>
       
         <View className='mb-8'>
@@ -76,6 +78,7 @@ const index = () => {
       onClose={()=>setIsOpen(false)}
       selectedTab={selectedTab} todo={todos} setTodo={setTodos}/>
     </SafeAreaView>
+    </GestureHandlerRootView>
   )
 }
 
