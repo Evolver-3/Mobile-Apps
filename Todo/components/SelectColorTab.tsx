@@ -2,12 +2,7 @@ import { View, Text, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import { tabsSelectColors } from '@/constants/data';
 import Animated,{ useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-
-
-type colorSelectorProps={
-  selectedColor:AllColors;
-  onSelectColor:(color:AllColors)=>void 
-}
+import { ScrollView } from 'react-native-gesture-handler';
 
 const DOT_SIZE=28
 const GAP=12
@@ -42,20 +37,22 @@ const SelectColorTab = ({selectedColor,onSelectColor}:colorSelectorProps) => {
   }
 
   return (
-    <View className='items-end overflow-hidden'>
+    <View className='items-end '>
 
       <Animated.View
       style={animatedStyle}
       className="h-8 flex-row items-center overflow-hidden">
 
         {open ?(
-          <View
-            className='flex-row items-center'
+          <ScrollView
+          showsVerticalScrollIndicator={false}
+          horizontal
+            className='flex-row items-center w-1/3 bg-neutral-600'
             style={{
             gap:GAP
             }}>
             {tabsSelectColors.map((item)=>{
-              const isSelected=selectedColor.color=== item.color
+              const isSelected=selectedColor.color === item.color
               return(
                 <Pressable
                   key={item.color}
@@ -64,8 +61,8 @@ const SelectColorTab = ({selectedColor,onSelectColor}:colorSelectorProps) => {
                   style={{
                   width:DOT_SIZE,
                   height:DOT_SIZE,
-                  borderWidth:isSelected ? 2:0,
-                  borderColor:"#171717"
+                  borderWidth:isSelected ? 1:0,
+                  borderColor:item.color
                   }}>
                   <View
                   className='rounded-full'
@@ -75,7 +72,7 @@ const SelectColorTab = ({selectedColor,onSelectColor}:colorSelectorProps) => {
                     backgroundColor:item.color,
                     }}/>
                 </Pressable>)})}
-          </View>
+          </ScrollView>
         ):(
           <Pressable
           onPress={openSelector}

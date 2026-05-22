@@ -4,16 +4,10 @@ import { CircleCheck,Circle, ChevronUp, Trash2,} from 'lucide-react-native'
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable'
 
 
-type createdTodoProps={
-  todo:AllTodos[],
-  selectedTab:string,
-  changeStatus:(id:string)=>Promise<AllTodos|undefined>,
-  deleteSelectedTodo:(id:string)=>Promise<void>
-}
-
 const CreatedTodo = ({todo,selectedTab,changeStatus,deleteSelectedTodo}:createdTodoProps) => {
 
-  const filteredData=selectedTab==="All"?todo:todo.filter(
+  const filteredData=selectedTab==="All"?todo : 
+  todo.filter(
     (item)=>item.tag===selectedTab
   )
 
@@ -80,7 +74,7 @@ const CreatedTodo = ({todo,selectedTab,changeStatus,deleteSelectedTodo}:createdT
     ListHeaderComponent={
       completeTodo.length>0?(
         <View className='flex-row justify-between px-4 mt-4'>
-          <Text className='text-white dark:text-neutral-200  text-md'>Done</Text>
+          <Text className='text-black font-sans dark:text-neutral-200  text-md'>Done</Text>
           <View className="flex-row items-center gap-2">
             <Text className="text-md text-black dark:text-white">{completeTodo.length>1?completeTodo.length:null}</Text>
 

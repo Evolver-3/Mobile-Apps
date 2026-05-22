@@ -70,7 +70,7 @@ const NewTodo = ({isOpen,onClose,selectedTab,todo,setTodo}:newTodoProps) => {
               textAlignVertical="top"
               multiline
               numberOfLines={5}
-              className="rounded-2xl h-30 py-6 text-lg"
+              className="rounded-2xl h-30 py-6 text-lg text-white  placeholder:text-neutral-300"
               />
               
             <View className="flex-row mt-4 items-center justify-between">
