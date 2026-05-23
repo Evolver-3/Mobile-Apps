@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createNewTodo, deleteTodo, getTodo ,getTodoByTag,updateTodo, updateTodoStatus} from "../controllers/todo.controller";
+import { createNewTodo, deleteTodo,getTodoByTag,updateTodo, updateTodoStatus,getAllTodo} from "../controllers/todo.controller";
 
 
 const router=Router()
@@ -8,7 +8,8 @@ router.route("/newTodo").post(createNewTodo)
 
 router.route("/tag/:tag").get(getTodoByTag)
 
-router.route("/:id").get(getTodo)
+router.route("/AllTag").get(getAllTodo)
+
 
 router.route("/delete/:id").delete(deleteTodo)
 
