@@ -11,7 +11,8 @@ declare global{
     setTodo:(array)=>void
   }
 
-  type TodoTag =string
+  type TodoTag =
+  | "All"
   | "In progress"
   | "Overdue"
   | "Today"
@@ -21,19 +22,38 @@ declare global{
 
 
   interface AllColors{
-    color:string;
-    bgColor:string;
-    textColor:string;
-    btnColor:string
+    btncolor:string;
+    colors:string;
+    darkColor:string;
   }
 
   type AllTodos = {
   id: string;
   title: string;
   tag: string;
-  colors: string;
+  colors:string;
+  darkColor:string;
   completed: boolean;
+  dueDate?:string|null;
 };
+
+
+type createdTodoProps={
+  todo:AllTodos[],
+  selectedTab:string,
+  changeStatus:(id:string)=>Promise<AllTodos|undefined>,
+  deleteSelectedTodo:(id:string)=>Promise<void>
+}
+
+type colorSelectorProps={
+  selectedColor:AllColors;
+  onSelectColor:(color:AllColors)=>void 
+}
+
+type DateSelectProps={
+  dueDate:Date|null;
+  setDueDate:(date:Date |null)=>void
+}
   
 }
 export {}
