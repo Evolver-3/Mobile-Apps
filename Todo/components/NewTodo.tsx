@@ -4,14 +4,20 @@ import { KeyboardAvoidingView,Modal,Platform ,TextInput,View,Text, Pressable} fr
 import SelectColorTab from "./SelectColorTab"
 import DateSelect from "./DateSelect"
 import { useTodos } from "@/hooks/useTodos"
+import { useColorScheme } from "nativewind"
 
-const NewTodo = ({isOpen,onClose,selectedTab,todo,setTodo}:newTodoProps) => {
+const NewTodo = ({isOpen,onClose,selectedTab,setTodo}:newTodoProps) => {
 
   const {createNewTodos}=useTodos(selectedTab)
+
+  const {colorScheme}=useColorScheme()
+  const isDark=colorScheme==="dark"
 
   const [title,setTitle]=useState("")
   //colortab
   const [selectedColor,setSelectedColor]=useState(tabsSelectColors[0])
+
+  const [dueDate,setDueDate]=useState<Date |null>(null)
 
   //creating a new Todo
   const handleSubmit=async()=>{
@@ -22,7 +28,9 @@ const NewTodo = ({isOpen,onClose,selectedTab,todo,setTodo}:newTodoProps) => {
     try{
       const response =await createNewTodos(
       title,
-      selectedColor.bgColor
+      selectedColor.colors,
+      selectedColor.darkColor,
+      dueDate ? dueDate.toISOString():null
       )
       console.log(response)
 
@@ -58,34 +66,36 @@ const NewTodo = ({isOpen,onClose,selectedTab,todo,setTodo}:newTodoProps) => {
           onPress={(e)=>e.stopPropagation()}
           className="rounded-t-3xl p-5"
           style={{
-            backgroundColor:selectedColor.bgColor
+            backgroundColor:isDark?selectedColor.darkColor:selectedColor.colors
           }}>
 
            <View className="flex-col ">
              <TextInput
               placeholder="Enter Todo"
+              placeholderTextColor={"#6E636A"}
               value={title}
               onChangeText={setTitle}
               autoFocus
               textAlignVertical="top"
               multiline
               numberOfLines={5}
-              className="rounded-2xl h-30 py-6 text-lg text-white  placeholder:text-neutral-300"
+              className="rounded-2xl h-30 py-6 text-lg text-black"
               />
               
             <View className="flex-row mt-4 items-center justify-between">
 
-            <View className="flex-row  gap-x-6 flex-1">
-              <DateSelect/>
+            <View className="flex-row items-center  gap-x-6 flex-1">
+              <DateSelect dueDate={dueDate}
+              setDueDate={setDueDate}/>
             <SelectColorTab
              selectedColor={selectedColor}
              onSelectColor={setSelectedColor}/>
             </View>
 
-             <Pressable className=" rounded-full items-center justify-center p-3 bg-slate-100 dark:bg-neutral-400"
+             <Pressable className=" rounded-full items-center justify-center p-3 bg-slate-100 dark:bg-neutral-600"
              
              onPress={handleSubmit}>
-              <Text className="text-md font-semibold">Done</Text>
+              <Text className="text-md font-semibold dark:text-white">Done</Text>
               </Pressable>
            </View>
            </View>

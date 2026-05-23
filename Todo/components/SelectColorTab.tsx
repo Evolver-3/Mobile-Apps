@@ -4,10 +4,11 @@ import { tabsSelectColors } from '@/constants/data';
 import Animated,{ useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const DOT_SIZE=28
-const GAP=12
-const CLOSED_WIDTH=DOT_SIZE
-const OPEN_WIDTH=tabsSelectColors.length * DOT_SIZE + (tabsSelectColors.length -1) *GAP
+const Size=28
+const GAP=10
+const CLOSED_WIDTH=Size
+
+const OPEN_WIDTH=250
 
 const SelectColorTab = ({selectedColor,onSelectColor}:colorSelectorProps) => {
 
@@ -47,29 +48,31 @@ const SelectColorTab = ({selectedColor,onSelectColor}:colorSelectorProps) => {
           <ScrollView
           showsVerticalScrollIndicator={false}
           horizontal
-            className='flex-row items-center w-1/3 bg-neutral-600'
-            style={{
-            gap:GAP
+          contentContainerClassName='items-center'
+            className='flex-row'
+            contentContainerStyle={{
+              alignItems:"center",
+              gap:GAP
             }}>
             {tabsSelectColors.map((item)=>{
-              const isSelected=selectedColor.color === item.color
+              const isSelected=selectedColor.btncolor === item.btncolor
               return(
                 <Pressable
-                  key={item.color}
+                  key={item.btncolor}
                   onPress={()=>handleSelect(item)}
                   className='items-center justify-center rounded-full'
                   style={{
-                  width:DOT_SIZE,
-                  height:DOT_SIZE,
+                  width:Size,
+                  height:Size,
                   borderWidth:isSelected ? 1:0,
-                  borderColor:item.color
+                  borderColor:item.btncolor
                   }}>
                   <View
                   className='rounded-full'
                   style={{
-                    width:DOT_SIZE-8,
-                    height:DOT_SIZE-8,
-                    backgroundColor:item.color,
+                    width:Size-8,
+                    height:Size-8,
+                    backgroundColor:item.btncolor,
                     }}/>
                 </Pressable>)})}
           </ScrollView>
@@ -78,9 +81,9 @@ const SelectColorTab = ({selectedColor,onSelectColor}:colorSelectorProps) => {
           onPress={openSelector}
           className='rounded-full'
           style={{
-            width:DOT_SIZE,
-            height:DOT_SIZE,
-            backgroundColor:selectedColor.color
+            width:Size,
+            height:Size,
+            backgroundColor:selectedColor.btncolor
           }}/>
         )}
 

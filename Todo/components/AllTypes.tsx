@@ -16,9 +16,9 @@ const AllTypes = ({selectedTab,setSelectTab}:AllTypesProps) => {
 
   const transparent =colorScheme==="dark"?"rgba(9,9,11,0)":"rgba(255,255,255,0)"
 
-  const TabsCols=colorScheme === "dark"?"#6B6665":"#D1C7C2"
+  const TabsCols=colorScheme === "dark"?"#6B6665":"#E7E7E7"
 
-  const TabsNotCols=colorScheme==="dark"?"#332F2E":"#F2EFED"
+  const TabsNotCols=colorScheme==="dark"?"#332F2E":"#ffffff"
 
 
   return (
@@ -28,16 +28,15 @@ const AllTypes = ({selectedTab,setSelectTab}:AllTypesProps) => {
       data={Alltabs}
       horizontal
       showsHorizontalScrollIndicator={false}
-      initialScrollIndex={0 }
+      initialScrollIndex={0}
       renderItem={({item})=>(
 
       <Pressable
       onPress={()=>setSelectTab(item)}
        className='px-4 py-2 rounded-xl m-2 '
        style={{
-        backgroundColor:selectedTab ===item? TabsCols:TabsNotCols
-       }}>
-          <Text className='text-md text-neutral-800 dark:text-neutral-100'
+        backgroundColor:selectedTab ===item? TabsCols:TabsNotCols} }>
+          <Text className={`text-sm text-neutral-800 dark:text-neutral-100 ${selectedTab===item?'font-semibold':''}`}
           >{item}</Text>
       </Pressable>
         )}/>
