@@ -27,7 +27,7 @@ const index = () => {
 
   return (
     <GestureHandlerRootView className='flex-1'>
-      <SafeAreaView className='flex-1 bg-white dark:bg-neutral-950 p-2'>
+      <SafeAreaView className='flex-1 bg-slate-50 dark:bg-neutral-950 p-2'>
       <View className='flex-1 justify-between '>
         <View className='  gap-y-4'>
         <View className='flex-row justify-between items-center pl-2'>
