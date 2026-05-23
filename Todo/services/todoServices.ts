@@ -4,6 +4,8 @@ type CreateTodoData={
   title:string 
   tag:string 
   colors:string
+  darkColor:string
+  dueDate?:string|null
 }
 
 export const createTodo=async(data:CreateTodoData)=>{

@@ -39,7 +39,7 @@ export const useTodos=(selectedTab:string)=>{
  }
 
 
- const createNewTodos=async(title:string,colors:string)=>{
+ const createNewTodos=async(title:string,colors:string,darkColor:string,dueDate?:string|null)=>{
   try{
     setLoading(true)
 
@@ -47,7 +47,7 @@ export const useTodos=(selectedTab:string)=>{
       throw new Error("Tag is required")
     }
 
-    const res=await createTodo({title,tag:selectedTab,colors})
+    const res=await createTodo({title,tag:selectedTab,colors:colors,dueDate,darkColor})
     
 
     return res
@@ -95,6 +95,8 @@ export const useTodos=(selectedTab:string)=>{
     setLoading(false)
   }
  }
+
+ 
 
   useEffect(()=>{
     if(selectedTab==="All"){
