@@ -12,6 +12,8 @@ model Todo {
   title     String
   tag       String
   colors    String?
+  darkColor String?
   completed Boolean  @default(false)
+  dueDate   DateTime?
   createdAt DateTime @default(now())
 }
