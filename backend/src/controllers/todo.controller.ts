@@ -4,37 +4,25 @@ import ApiError from '../utils/ApiError'
 import ApiResponse from '../utils/ApiResponse'
 
 export const createNewTodo=asyncHandler(async(req,res)=>{
-  const {title,tag,colors}=req.body
+  const {title,tag,colors,darkColor,dueDate}=req.body
 
   if(!title?.trim()){
     throw new ApiError(400, "Title is required")
   }
 
+  const parsedDueDate=dueDate ? new Date(dueDate) :null 
+
+  if(parsedDueDate && isNaN(parsedDueDate.getTime())){
+    throw new ApiError(400, "Invalid due date")
+  }
+
   const todo=await prisma.todo.create({
-    data:{title,tag,colors}
+    data:{title,tag,colors,dueDate:parsedDueDate,darkColor}
   })
 
   return res.status(201).json(new ApiResponse(201,todo,"Todo created"))
 })
 
-export const getTodo=asyncHandler(async(req,res)=>{
-  const {id}=req.params
-
-  if(!id){
-    throw new ApiError(400, "id is required")
-  }
-    const todo=await prisma.todo.findUnique({
-      where:{
-        id
-      }
-    })
-
-    if(!todo){
-      throw new ApiError(404,"Todo not found")
-    }
-
-    return res.status(200).json(new ApiResponse(200,todo,"Get todo by Id"))
-})
 
 export const deleteTodo=asyncHandler(async(req,res)=>{
 
@@ -72,6 +60,21 @@ export const getTodoByTag=asyncHandler(async(req,res)=>{
   }
 
   return res.status(200).json(new ApiResponse(200, todo, "Todo according to the tag"))
+})
+
+export const getAllTodo=asyncHandler(async(req,res)=>{
+  
+  const todos=await prisma.todo.findMany({
+    orderBy:{
+      createdAt:"desc"
+    }
+  })
+
+  if(!todos){
+    throw new ApiError(404,"No todo exist")
+  }
+
+  return res.status(200).json(new ApiResponse(200,todos,"All todos fetched"))
 })
 
 export const updateTodo=asyncHandler(async(req,res)=>{
